@@ -9,7 +9,7 @@ class GithubFaveLang
   end
 
   def repos_for_user username
-    user = Octokit.user(username)
+    user = get_user(username)
     user_repos = user.rels[:repos].get
     user_repos.data
   end
@@ -25,6 +25,14 @@ class GithubFaveLang
     hash
       .max_by{|k,v| v}
       .first
+  end
+
+  def get_user username
+    begin
+      Octokit.user(username)
+    rescue Octokit::NotFound
+      raise ArgumentError.new("The user '#{username}' cannot be found")
+    end
   end
 
 end

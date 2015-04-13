@@ -2,13 +2,19 @@ require 'github_favelang'
 
 describe GithubFaveLang do
   let(:user){ 'AdamWhittingham' }
+  let(:invalid_user){ "invalid_user" }
   let(:vim_repo) { "https://github.com/#{user}/vim-config" }
 
   describe '#repos_for_user' do
-    let(:repos) { subject.repos_for_user(user) }
 
     it 'returns repos for a given user' do
+      repos =  subject.repos_for_user(user)
       expect(repos.map{|r| r.html_url}).to include vim_repo
+    end
+
+    it 'raises an ArguementError if the username is invalid' do
+      expected_message  = "The user '#{invalid_user}' cannot be found"
+      expect{subject.repos_for_user(invalid_user)}.to raise_error(ArgumentError, expected_message)
     end
 
   end
