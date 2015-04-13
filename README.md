@@ -3,6 +3,11 @@ Github FaveLang
 
 A quick way of seeing what a users favourite language is on Github.
 
+Installation
+------------
+After checking out the project, be sure to run `bundle install` to install the required dependencies
+
+
 Command Line Usage
 ------------------
 
