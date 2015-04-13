@@ -13,7 +13,7 @@ username = ARGV.pop.strip
 begin
   puts GithubFaveLang.new.favourite_language(username)
 rescue ArgumentError, UncertainLangaugeError => e
-  $stderr.puts 'Sorry, an error occured:'
+  $stderr.puts "Sorry, we can't work this one out"
   $stderr.puts e.message
   exit 2
 end
