@@ -17,13 +17,19 @@ describe GithubFaveLang do
     let (:vim_repo)  { {language: 'vim'} }
     let (:ruby_repo) { {language: 'ruby'} }
     let (:nil_repo)  { {language: nil} }
-    let (:example_input) {
-      [ vim_repo, ruby_repo, nil_repo, ruby_repo ]
-    }
 
     it 'returns the count each language was seen' do
-      result = subject.repos_per_language(example_input)
+      input = [ vim_repo, ruby_repo, nil_repo, ruby_repo ]
+      result = subject.repos_per_language(input)
       expect(result).to eq({'ruby' => 2, 'vim' => 1})
+    end
+  end
+
+  describe '#most_popular' do
+    it 'returns the key for the highest value' do
+      input = { 'Elixir' => 10, 'Ruby' => 100, 'Python' => 50 }
+      result = subject.most_popular(input)
+      expect(result).to eq 'Ruby'
     end
   end
 

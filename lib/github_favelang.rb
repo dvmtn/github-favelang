@@ -4,7 +4,8 @@ class GithubFaveLang
 
   def favoute_language username
     repos = repos_for_user username
-    repos_per_language(repos)
+    languages = repos_per_language(repos)
+    most_popular languages
   end
 
   def repos_for_user username
@@ -18,6 +19,12 @@ class GithubFaveLang
       .map{|repo| repo[:language]}
       .compact
       .each_with_object(Hash.new(0)) { |lang, counts| counts[lang] += 1 }
+  end
+
+  def most_popular hash
+    hash
+      .max_by{|k,v| v}
+      .first
   end
 
 end
