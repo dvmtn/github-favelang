@@ -2,7 +2,7 @@ require 'octokit'
 
 class GithubFaveLang
 
-  def favoute_language username
+  def favourite_language username
     repos = repos_for_user username
     languages = repos_per_language(repos)
     most_popular languages
