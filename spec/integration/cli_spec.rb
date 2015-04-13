@@ -31,4 +31,14 @@ describe 'Command Line Interface' do
     end
   end
 
+  context 'when the username given has repos without a clear language' do
+    it 'exits with code 2' do
+      expect{`bin/favelang invalid_user`}.to have_exit_status 2
+    end
+
+    it 'displays an error message' do
+      expect{`bin/favelang pixe`}.to output(/We can't find any repos for this user/).to_stderr_from_any_process
+    end
+  end
+
 end

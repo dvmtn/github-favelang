@@ -29,6 +29,16 @@ describe GithubFaveLang do
       result = subject.repos_per_language(input)
       expect(result).to eq({'ruby' => 2, 'vim' => 1})
     end
+
+    it 'raises a UncertainLangaugeError if the repos have no clear language' do
+      input = [ nil_repo, nil_repo ]
+      expect{subject.repos_per_language(input)}.to raise_error(UncertainLangaugeError)
+    end
+
+    it 'raises a UncertainLangaugeError if there are no repos' do
+      input = []
+      expect{subject.repos_per_language(input)}.to raise_error(UncertainLangaugeError)
+    end
   end
 
   describe '#most_popular' do

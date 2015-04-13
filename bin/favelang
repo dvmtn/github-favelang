@@ -12,7 +12,7 @@ help if ARGV.count != 1
 username = ARGV.pop.strip
 begin
   puts GithubFaveLang.new.favourite_language(username)
-rescue ArgumentError => e
+rescue ArgumentError, UncertainLangaugeError => e
   $stderr.puts 'Sorry, an error occured:'
   $stderr.puts e.message
   exit 2
