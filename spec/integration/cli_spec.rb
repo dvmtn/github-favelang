@@ -1,20 +1,34 @@
-require 'github_favelang'
 require 'aruba/rspec'
 
 describe 'Command Line Interface' do
-  it 'takes a username and returns their favourite language' do
-    expect(`favelang AdamWhittingham`).to shellout 'Ruby'
+  context 'when working as intended' do
+    it 'takes a username and returns their favourite language' do
+      expect(`bin/favelang AdamWhittingham`).to eq "Ruby\n"
+    end
+
+    it 'exits with code 0 for sucessful runs' do
+      expect{`bin/favelang AdamWhittingham`}.to have_exit_status 0
+    end
   end
 
-  it 'exits with code 0 for sucessful runs' do
-    expect(`favelang AdamWhittingham`).to have_exit_status 0
+  context 'when a an arguement is ommited' do
+    it 'exits with code 1' do
+      expect{`bin/favelang`}.to have_exit_status 1
+    end
+
+    it 'displays help if no arguments are given' do
+      expect{`bin/favelang`}.to output("Usage: favelang <github-username>\n").to_stderr_from_any_process
+    end
   end
 
-  it 'exits with code 1 for bad usernames' do
-    expect (`favelang 0`).to have_exit_status 1
+  context 'when the username given is invalid' do
+    it 'exits with code 2' do
+      expect{`bin/favelang invalid_user`}.to have_exit_status 2
+    end
+
+    it 'displays an error message' do
+      expect{`bin/favelang invalid_user`}.to output(/The user 'invalid_user' cannot be found/).to_stderr_from_any_process
+    end
   end
 
-  it 'displays help if no arguments are given' do
-    expect (`favelang`).to shellout 'favelang <github-username>'
-  end
 end
