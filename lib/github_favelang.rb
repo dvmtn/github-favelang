@@ -27,9 +27,22 @@ class GithubFaveLang
       .first
   end
 
+  private
+
+  def octokit_client
+    if ENV['GITHUB_CLIENT_ID']
+      Octokit::Client.new(
+        client_id: ENV['GITHUB_CLIENT_ID'],
+        client_secret: ENV['GITHUB_CLIENT_SECRET']
+      )
+    else
+      Octokit
+    end
+  end
+
   def get_user username
     begin
-      Octokit.user(username)
+      octokit_client.user(username)
     rescue Octokit::NotFound
       raise ArgumentError.new("The user '#{username}' cannot be found")
     end
